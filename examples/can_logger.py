@@ -31,12 +31,13 @@ def can_logger():
     bus1_msg_cnt = 0
     bus2_msg_cnt = 0
 
+    i = 0
     while True:
       can_recv = p.can_recv()
 
       for address, _, dat, src  in can_recv:
         csvwriter.writerow([str(src), str(hex(address)), "0x" + binascii.hexlify(dat), len(dat)])
-
+        i += 1
         if src == 0:
           bus0_msg_cnt += 1
         elif src == 1:
@@ -44,7 +45,9 @@ def can_logger():
         elif src == 2:
           bus2_msg_cnt += 1
 
-        print("Message Counts... Bus 0: " + str(bus0_msg_cnt) + " Bus 1: " + str(bus1_msg_cnt) + " Bus 2: " + str(bus2_msg_cnt), end='\r')
+        if i % 1000 == 0:
+          print("Message Counts... Bus 0: " + str(bus0_msg_cnt) + " Bus 1: " + str(bus1_msg_cnt) + " Bus 2: " + str(bus2_msg_cnt), end='\r')
+          sys.stdout.flush()
 
   except KeyboardInterrupt:
     print("\nNow exiting. Final message Counts... Bus 0: " + str(bus0_msg_cnt) + " Bus 1: " + str(bus1_msg_cnt) + " Bus 2: " + str(bus2_msg_cnt))
