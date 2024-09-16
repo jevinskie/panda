@@ -2,7 +2,7 @@
 import argparse
 from tqdm import tqdm
 from panda import Panda
-from panda.python.uds import UdsClient, MessageTimeoutError, NegativeResponseError, InvalidSubAddressError, \
+from panda.uds import UdsClient, MessageTimeoutError, NegativeResponseError, InvalidSubAddressError, \
                              SESSION_TYPE, DATA_IDENTIFIER_TYPE
 
 if __name__ == "__main__":
