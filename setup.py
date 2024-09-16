@@ -11,6 +11,7 @@
 import codecs
 import os
 import re
+import sys
 from setuptools import setup
 
 here = os.path.abspath(os.path.dirname(__file__))
@@ -31,6 +32,27 @@ def find_version(*file_paths):
     return version_match.group(1)
   raise RuntimeError("Unable to find version string.")
 
+def get_dev_deps():
+  dev_deps = [
+      "scons",
+      "pycryptodome >= 3.9.8",
+      "cffi",
+      "flaky",
+      "pytest",
+      "pytest-mock",
+      "pytest-xdist",
+      "pytest-timeout",
+      "pytest-randomly",
+      "parameterized",
+      "pre-commit",
+      "numpy",
+      "ruff",
+      "setuptools", # for setup.py
+  ]
+  if sys.platform == "linux":
+    dev_deps.append("spidev")
+  return dev_deps
+
 setup(
   name='pandacan',
   version=find_version("python", "__init__.py"),
@@ -47,23 +69,7 @@ setup(
     'libusb1',
   ],
   extras_require = {
-    'dev': [
-      "scons",
-      "pycryptodome >= 3.9.8",
-      "cffi",
-      "flaky",
-      "pytest",
-      "pytest-mock",
-      "pytest-xdist",
-      "pytest-timeout",
-      "pytest-randomly",
-      "parameterized",
-      "pre-commit",
-      "numpy",
-      "ruff",
-      "spidev",
-      "setuptools", # for setup.py
-    ],
+    'dev': get_dev_deps(),
   },
   ext_modules=[],
   description="Code powering the comma.ai panda",
