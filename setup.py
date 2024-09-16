@@ -66,7 +66,9 @@ setup(
   platforms='any',
   license='MIT',
   install_requires=[
+    'hexdump',
     'libusb1',
+    'python-pcapng',
   ],
   extras_require = {
     'dev': get_dev_deps(),
